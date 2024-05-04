@@ -17,7 +17,6 @@ char = [250,250]
 dx, dy = 0, 0
 
 while run:
-
     win.fill((0,0,0))
 
     pg.draw.rect(win,(255,255,255),(char[0]-10,char[1]-10,20,20))
