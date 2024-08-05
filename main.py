@@ -1,44 +1,42 @@
 import pygame as pg
 import time
 
-win = pg.display.set_mode((1000,700))
+win = pg.display.set_mode((1300,700))
 run = True
 
-
-distance_divider = 30
 overall_divider = 40
+distance_divider = 20
 friction_divider = 1000
-bounciness_divider = 100
+bounciness_divider = 400
 
-gravity = 0.005
+gravity = 0.01
 
-
-char = [250,250]
+object = [250,250]
 dx, dy = 0, 0
 
 while run:
     win.fill((0,0,0))
 
-    pg.draw.rect(win,(255,255,255),(char[0]-10,char[1]-10,20,20))
+    pg.draw.rect(win,(255,255,255),(object[0]-10,object[1]-10,20,20))
 
     mouse = pg.mouse.get_pos()
 
     if pg.mouse.get_pressed()[0]:
-        pg.draw.line(win, (255,255,255), char, mouse)
+        pg.draw.line(win, (255,255,255), object, mouse)
 
         # Magic
-        dx += ((1 if char[0] < mouse[0] else -1)/10 * abs(char[0] - mouse[0])/distance_divider)/overall_divider
-        dy += ((1 if char[1] < mouse[1] else -1)/10 * abs(char[1] - mouse[1])/distance_divider)/overall_divider
+        dx += ((1 if object[0] < mouse[0] else -1)/10 * abs(object[0] - mouse[0])/distance_divider)/overall_divider
+        dy += ((1 if object[1] < mouse[1] else -1)/10 * abs(object[1] - mouse[1])/distance_divider)/overall_divider
 
-    char[0] += dx
-    char[1] += dy
+    object[0] += dx
+    object[1] += dy
 
     # Gravity pull down
     dy += gravity
 
     # Declaring screen margins
-    if char[0] <= 0+10 or char[0] >= 1000-10: dx = -dx - dx/bounciness_divider
-    if char[1] <= 0+10 or char[1] >= 700-10: dy = -dy - dx/bounciness_divider
+    if object[0] <= -300+10 or object[0] >= 1600-10: dx = -dx - dx/bounciness_divider
+    if object[1] <= -300+10 or object[1] >= 700-10: dy = -dy - dy/bounciness_divider
 
     # Decreasing momentum over time
     if dx > 0: dx -= dx/friction_divider
